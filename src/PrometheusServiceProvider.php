@@ -5,26 +5,22 @@ declare(strict_types=1);
 namespace PhprometheusLaravel;
 
 use Prometheus\Storage\APC;
-use Psr\Log\LoggerInterface;
 use Prometheus\Storage\Redis;
 use UnexpectedValueException;
 use Illuminate\Routing\Router;
 use Prometheus\Storage\Adapter;
 use Prometheus\Storage\InMemory;
 use Prometheus\CollectorRegistry;
-use PrometheusPushGateway\PushGateway;
 use Illuminate\Support\ServiceProvider;
 use Phprometheus\Prometheus;
 use Phprometheus\PrometheusExporter;
-use Phprometheus\AbstractPrometheus;
-use Phprometheus\PrometheusPushGateway;
 
 class PrometheusServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
         $this->publishes([
-            __DIR__.'/../config/phprometheus.php' => config_path('phprometheus.php')
+            __DIR__ . '/../config/phprometheus.php' => config_path('phprometheus.php')
         ], 'config');
         $this->loadRoutes();
     }
@@ -48,15 +44,6 @@ class PrometheusServiceProvider extends ServiceProvider
         });
 
         $this->app->bind(Prometheus::class, function () {
-            if (config('prometheus.push_gateway.enabled')) {
-                return new PrometheusPushGateway(
-                    config('prometheus.namespace'),
-                    config('prometheus.push_gateway.job'),
-                    new PushGateway(config('prometheus.push_gateway.url')),
-                    $this->app->get(LoggerInterface::class),
-                );
-            }
-
             return new PrometheusExporter(
                 config('prometheus.namespace'),
                 new CollectorRegistry($this->app->get(Adapter::class)),
