@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Phprometheus\Laravel;
+namespace PhprometheusLaravel;
 
 use Closure;
 use Illuminate\Http\Request;

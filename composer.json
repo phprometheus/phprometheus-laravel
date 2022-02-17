@@ -9,15 +9,24 @@
       "email": "me@kieranajp.co.uk"
     }
   ],
-  "psr-4": {
-    "Phprometheus\\Laravel\\": "src/"
+  "autoload": {
+    "psr-4": {
+      "PhprometheusLaravel\\": "src/"
+    }
   },
   "require": {
     "php": ">=7.3",
-    "phprometheus/phprometheus": "dev-master",
+    "phprometheus/phprometheus": "^0.1",
     "laravel/framework": ">=6.0"
   },
   "require-dev": {
     "kahlan/kahlan": "^5"
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "PhprometheusLaravel\\ServiceProvider"
+      ]
+    }
   }
 }

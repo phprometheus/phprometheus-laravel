@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Phprometheus\Laravel;
+namespace PhprometheusLaravel;
 
 use Prometheus\Storage\APC;
 use Psr\Log\LoggerInterface;
@@ -23,6 +23,9 @@ class PrometheusServiceProvider extends ServiceProvider
 {
     public function boot(): void
     {
+        $this->publishes([
+            __DIR__.'/../config/phprometheus.php' => config_path('phprometheus.php')
+        ], 'config');
         $this->loadRoutes();
     }
 
